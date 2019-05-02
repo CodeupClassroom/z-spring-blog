@@ -1,0 +1,40 @@
+POST http://localhost:8080/posts/create
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-05-02T093420.200.txt
+
+###
+
+GET http://localhost:8080
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-05-01T041111.200.txt
+
+###
+
+GET http://localhost:8080/hello/fer
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-05-01T030130.200.txt
+
+###
+
+POST http://localhost:8080/hello/fer
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-05-01T030117.200.txt
+
+###
+
+POST http://localhost:8080/hello/fer
+Accept: */*
+Cache-Control: no-cache
+
+<> 2019-05-01T025935.405.json
+
+###
+
