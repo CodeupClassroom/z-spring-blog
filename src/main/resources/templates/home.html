@@ -4,6 +4,7 @@
   <th:block th:replace="fragments/head :: header('Home')"/>
 </head>
 <body>
+<th:block th:replace="fragments/navbar" />
 
 <h1>Hello, <span th:text="${username}">this text is replaced</span></h1>
 
@@ -21,6 +22,7 @@
     </li>
 </ul>
 
+<th:block th:replace="fragments/footer" />
 
 </body>
 </html>
