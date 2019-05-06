@@ -1,5 +1,6 @@
 package com.codeup.blog;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,10 @@ import java.util.List;
 
 @Controller
 public class PostController {
+
+//    @Autowired
+    private EmailService emailService;
+
 
     @GetMapping("/posts")
     public String showPosts(Model model){
@@ -53,4 +58,16 @@ public class PostController {
         return "create a new post";
     }
 
+//    @PostMapping("/posts/email")
+//    @ResponseBody
+//    public String emailPost(EmailService emailService) {
+//        Post post = new Post();
+//        post.setAuthorEmail("daniel@codeup.com");
+//        post.setTitle("Here is post #" + post.getId());
+//        post.setBody("This is not going to be a very long blog post");
+//
+//        this.emailService = emailService;
+//        emailService.prepareAndSend(post, "Your post was successfully created", "New post \"" + post.getTitle() + "\" successfully created.");
+//        return "success";
+//    }
 }
