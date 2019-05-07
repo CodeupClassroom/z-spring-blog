@@ -1,8 +1,17 @@
 package com.codeup.blog;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="posts")
 public class Post {
+    @Column(nullable = false)
     private String title;
+    @Column
     private String body;
+
+    @Id
+    @GeneratedValue
     private long id;
 
     public long getId() {
