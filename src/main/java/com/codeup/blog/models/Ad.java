@@ -1,4 +1,4 @@
-package com.codeup.blog;
+package com.codeup.blog.models;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,14 +22,23 @@ public class Ad {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ad")
     private List<AdImage> images;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name="ads_categories",
+            joinColumns= {@JoinColumn(name="ad_id")},
+            inverseJoinColumns={@JoinColumn(name="category_id")}
+    )
+    private List<AdCategory> categories;
+
     public Ad() {
     }
 
-    public Ad(String title, String description, User owner, List<AdImage> images) {
+    public Ad(String title, String description, User owner, List<AdImage> images, List<AdCategory> categories) {
         this.title = title;
         this.description = description;
         this.owner = owner;
         this.images = images;
+        this.categories = categories;
     }
 
     public long getId() {
@@ -70,5 +79,13 @@ public class Ad {
 
     public void setImages(List<AdImage> images) {
         this.images = images;
+    }
+
+    public List<AdCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<AdCategory> categories) {
+        this.categories = categories;
     }
 }
