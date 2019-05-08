@@ -2,6 +2,7 @@ package com.codeup.blog.controllers;
 
 import com.codeup.blog.models.Ad;
 import com.codeup.blog.repositories.AdRepository;
+import com.codeup.blog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +10,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class AdController {
     private final AdRepository adsRepo;
+    private final UserRepository userRepo;
 
-    public AdController(AdRepository ads) {
+    public AdController(AdRepository ads, UserRepository users)
+    {
         this.adsRepo = ads;
+        this.userRepo = users;
     }
 
     @GetMapping("/ads")
@@ -23,30 +27,31 @@ public class AdController {
     }
 
     @GetMapping("/ads/{id}")
-    public String showPost(@PathVariable long id, Model model) {
-//        Post post = new Post();
-//        post.setId(id);
-//        post.setTitle("Here is post #" + post.getId());
-//        post.setBody("This is not going to be a very long blog post");
+    public String showAd(@PathVariable long id, Model model) {
         Ad ad = adsRepo.findOne(id);
         model.addAttribute("ad", ad);
         return "ads/show";
     }
 
-//    @GetMapping("/posts/create")
-//    public String showCreateForm(){
-//        return "posts/create";
-//    }
-//
-//    @PostMapping("/posts/create")
-//    @ResponseBody
-//    public String createPost(@RequestParam String title, @RequestParam String body){
-//        Post newPost = new Post();
-//        newPost.setTitle(title);
-//        newPost.setBody(body);
-//        postRepo.save(newPost);
-//        return "new post created";
-//    }
+    @GetMapping("/ads/create")
+    public String showCreateForm(Model model){
+        model.addAttribute("ad", new Ad());
+        return "ads/create";
+    }
+
+    @PostMapping("/ads/create")
+    @ResponseBody
+    public String createPost(@ModelAttribute Ad ad) {
+            //@RequestParam String title, @RequestParam String description){
+//        Ad newAd = new Ad();
+//        newAd.setTitle(title);
+//        newAd.setDescription(description);
+//        newAd.setOwner(userRepo.findOne(1L));
+//        adsRepo.save(newAd);
+        ad.setOwner(userRepo.findOne(1L));
+        adsRepo.save(ad);
+        return "new ad created";
+    }
 //
 //    @GetMapping("/posts/{id}/edit")
 //    public String editForm(@PathVariable long id, Model model) {
