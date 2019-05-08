@@ -13,7 +13,7 @@
        <li th:each="ad : ${ads}">
            <a th:href="@{'/ads/'+${ad.id}}"> <h3 th:text="${ad.title}"></h3></a>
            <p th:text="${ad.description}"></p>
-           <a th:text="${ad.owner.email}"></a>
+           <!--<a th:text="${ad.owner.email}"></a>-->
            <!--select * from ads join users u on u.id = ads.user_id where id = 1 -->
            <br/>
            <img width="300" height="300" th:each="image : ${ad.images}" th:src="${image.path}" alt="" />
