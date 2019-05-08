@@ -3,19 +3,22 @@ package com.codeup.blog.controllers;
 import com.codeup.blog.models.Post;
 import com.codeup.blog.repositories.PostRepository;
 import com.codeup.blog.repositories.UserRepository;
+import com.codeup.blog.services.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PostController {
+
     private final PostRepository postRepo;
     private final UserRepository userRepo;
+    private EmailService emailService;
 
-    public PostController(PostRepository posts, UserRepository users) {
-
+    public PostController(PostRepository posts, UserRepository users, EmailService emailService) {
         this.postRepo = posts;
         this.userRepo = users;
+        this.emailService = emailService;
     }
 
     @GetMapping("/posts")
@@ -43,6 +46,7 @@ public class PostController {
     public String createPost(@ModelAttribute Post postToSaved){
         postToSaved.setAuthor(userRepo.findOne(1L));
         Post savedPost = postRepo.save(postToSaved);
+        emailService.prepareAndSend(savedPost, "Post has been created", "The post has been created successfully and you can find it with the ID of " +savedPost.getId());
         return "redirect:/posts/" + savedPost.getId();
     }
 
