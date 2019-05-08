@@ -28,10 +28,6 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     public String showPost(@PathVariable long id, Model model) {
-//        Post post = new Post();
-//        post.setId(id);
-//        post.setTitle("Here is post #" + post.getId());
-//        post.setBody("This is not going to be a very long blog post");
         Post post = postRepo.findOne(id);
         model.addAttribute("post", post);
         return "posts/show";
@@ -58,16 +54,11 @@ public class PostController {
     }
 
     @PostMapping("/posts/{id}/edit")
-    @ResponseBody
-    public String editPost(@RequestParam String title, @RequestParam String body, @RequestParam String id) {
-        Post post = postRepo.findOne(Long.valueOf(id));
-        post.setTitle(title);
-        post.setBody(body);
-        postRepo.save(post);
-        return "successfully modified post";
+    public String editPost(@ModelAttribute Post postTobeEdited) {
+        postTobeEdited.setAuthor(userRepo.findOne(1L));
+        postRepo.save(postTobeEdited);
+        return "redirect:/posts/" + postTobeEdited.getId();
     }
-
-
 
     private void init() {
 //        List<Post> posts = new ArrayList<>();
