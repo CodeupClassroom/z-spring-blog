@@ -1,6 +1,7 @@
 package com.codeup.blog.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -18,6 +19,9 @@ public class User {
 
     @Column(nullable = false)
     private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "writer")
+    private List<Post> posts;
 
     // C on the CRUD
     public User() {

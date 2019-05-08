@@ -10,6 +10,10 @@ public class Post {
     @Column
     private String body;
 
+    @ManyToOne
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private User writer;
+
     @Id
     @GeneratedValue
     private long id;
@@ -36,5 +40,13 @@ public class Post {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public User getAuthor() {
+        return writer;
+    }
+
+    public void setAuthor(User author) {
+        this.writer = author;
     }
 }
