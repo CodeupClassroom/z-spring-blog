@@ -2,6 +2,7 @@ package com.codeup.blog.controllers;
 
 import com.codeup.blog.models.Post;
 import com.codeup.blog.repositories.PostRepository;
+import com.codeup.blog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +10,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class PostController {
     private final PostRepository postRepo;
+    private final UserRepository userRepo;
 
-    public PostController(PostRepository posts) {
+    public PostController(PostRepository posts, UserRepository users) {
+
         this.postRepo = posts;
+        this.userRepo = users;
     }
 
     @GetMapping("/posts")
@@ -44,6 +48,7 @@ public class PostController {
         Post newPost = new Post();
         newPost.setTitle(title);
         newPost.setBody(body);
+        newPost.setAuthor(userRepo.findOne(1L));
         postRepo.save(newPost);
         return "new post created";
     }
