@@ -38,19 +38,16 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String showCreateForm(){
+    public String showCreateForm(Model vModel){
+        vModel.addAttribute("post", new Post());
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String createPost(@RequestParam String title, @RequestParam String body){
-        Post newPost = new Post();
-        newPost.setTitle(title);
-        newPost.setBody(body);
-        newPost.setAuthor(userRepo.findOne(1L));
-        postRepo.save(newPost);
-        return "new post created";
+    public String createPost(@ModelAttribute Post postToSaved){
+        postToSaved.setAuthor(userRepo.findOne(1L));
+        Post savedPost = postRepo.save(postToSaved);
+        return "redirect:/posts/" + savedPost.getId();
     }
 
     @GetMapping("/posts/{id}/edit")
