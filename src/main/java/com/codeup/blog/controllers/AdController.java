@@ -1,8 +1,10 @@
 package com.codeup.blog.controllers;
 
 import com.codeup.blog.models.Ad;
+import com.codeup.blog.models.User;
 import com.codeup.blog.repositories.AdRepository;
 import com.codeup.blog.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,13 +44,9 @@ public class AdController {
     @PostMapping("/ads/create")
     @ResponseBody
     public String createPost(@ModelAttribute Ad ad) {
-            //@RequestParam String title, @RequestParam String description){
-//        Ad newAd = new Ad();
-//        newAd.setTitle(title);
-//        newAd.setDescription(description);
-//        newAd.setOwner(userRepo.findOne(1L));
-//        adsRepo.save(newAd);
-        ad.setOwner(userRepo.findOne(1L));
+        User sessionUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User userDB = userRepo.findOne(sessionUser.getId());
+        ad.setOwner(userDB);
         adsRepo.save(ad);
         return "new ad created";
     }
