@@ -1,3 +1,10 @@
 <nav>
-    Welcome to our site. <a href="/roll-dice">Play our game.</a>
+    <ul>
+        <li>Welcome to our site. <a href="/roll-dice">Play our game.</a></li>
+        <li>
+            <form th:action="@{/logout}" th:method="post">
+                <button class="btn-link btn" style="margin-top: 8px">Logout</button>
+            </form>
+        </li>
+    </ul>
 </nav>
